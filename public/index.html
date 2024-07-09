@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS StyleSheet -->
+    <link rel="stylesheet" href="style.css">
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/trakr-favicon-black.png" type="image/x-icon">
+    <!-- Vue JS CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/88f3d1f48c.js" crossorigin="anonymous"></script>
+    <!--Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <!--title-->
+    <title>TRAKR</title>
+</head>
+<body>
+    <div id="app" height="100%">
+        <header>
+            <a href="index.html" class="logo" style="display: flex;">
+                <img src="images/trakr-favicon-white.png" width="50px">
+            </a>
+            <h2 style="font-weight:300;letter-spacing: 5px;">{{currentPage}}</h2>
+            <div class="search">
+                <button v-model="search-btn" ><i class="fa-solid fa-magnifying-glass"></i></button>
+                <input type="text" v-model="search-text" placeholder="Search ...">
+            </div>
+            <div class="top-nav">
+                <div class="mail">
+                    <i class="fa-regular fa-envelope largefont-i"></i>
+                </div>
+                <div class="notification">
+                    <div class="notification-bell"></div>
+                    <i  class="fa-regular fa-bell largefont-i"></i>
+                </div>
+                <div class="profile">
+                    <img src="https://picsum.photos/50" alt="">
+                </div>
+            </div>
+        </header>
+        <div class="pageflexer">
+           <nav>
+            <ul>
+                <li @click="currentPage = page.text" :class="{active: currentPage === page.text}" v-for="page in pages" style="display: flex;">
+                    <div class="image">
+                        <img :src="page.image" width="20px" alt="" style="display: flex;">
+                    </div>
+                    <p>{{page.text}}</p>
+                </li>
+            </ul>
+            <div class="log-out">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <p>Log Out</p>
+            </div>
+        </nav>
+        <main>
+            <div v-if="currentPage === 'Dashboard'" class="page">
+            </div>
+            <div v-if="currentPage === 'Account'" class="page">
+            </div>
+            <div v-if="currentPage === 'Chart'" class="page">
+            </div>
+            <div v-if="currentPage === 'Wallet'" class="page">
+            </div>
+            <div v-if="currentPage === 'News'" class="page">
+            </div>
+            <div v-if="currentPage === 'Settings'" class="page">
+            </div>
+        </main> 
+        </div>
+        
+
+    </div>
+    
+
+    <script src="app.js"></script>
+</body>
+</html>
