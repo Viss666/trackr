@@ -34,7 +34,6 @@ Vue.createApp({
                     method: 'GET',
                     headers: {
                         accept: 'application/json',
-                        'x-cg-demo-api-key': 'CG-t3LtBnSXvgWENNfVLcy96h7y'
                     }
                 };
 
