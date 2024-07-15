@@ -24,7 +24,8 @@ Vue.createApp({
             ], 
             cryptoID: "dogecoin",
             cryptoData: [],
-            cryptoData2: []
+            cryptoData2: [],
+            //hello
         };
     },
     methods: {
@@ -34,7 +35,7 @@ Vue.createApp({
                     method: 'GET',
                     headers: {
                         accept: 'application/json',
-                        
+
                     }
                 };
 
