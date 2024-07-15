@@ -34,6 +34,7 @@ Vue.createApp({
                     method: 'GET',
                     headers: {
                         accept: 'application/json',
+                        
                     }
                 };
 
