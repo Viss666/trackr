@@ -139,3 +139,43 @@ main{
 .less-than{
     color: red;
 }
+.graphcontainer{
+    display: flex;
+    flex-direction: column;
+    background: #000;
+    border-radius: 15px;
+    width: 600px;
+    height:350px;
+}
+.graph{
+    overflow: none;
+    height: 400px;
+    width: 100%;
+}
+.timeframes{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.timebtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: #1a1a1a solid 1px ;
+    font-size: 12px;
+    border-radius:15px;
+    height: 20px;
+    padding-inline: 3px;
+    width: 35px;
+    padding-block: 12px;
+    cursor: pointer;
+}
+.top-graph{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 15px;
+    padding-block: 10px;
+    border-bottom: #1a1a1a solid 2px
+
+}

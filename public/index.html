@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <marquee behavior="scroll" direction="left" class="marqueemain " loop="infinte" speed="1">
+        <marquee behavior="scroll" direction="left" class="marqueemain " speed="1">
             <ul>
                 <p v-for="coin in cryptoData2.data">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
             </ul>
@@ -59,7 +59,7 @@
         <div class="pageflexer">
            <nav>
             <ul>
-                <li @click="currentPage = page.text" :class="{active: currentPage === page.text}" v-for="page in pages" style="display: flex;">
+                <li @click="setPage(page.text)" :class="{active: currentPage === page.text}" v-for="page in pages" style="display: flex;">
                     <div class="image">
                         <img :src="page.image" width="20px" alt="" style="display: flex;">
                     </div>
@@ -73,8 +73,21 @@
         </nav>
         <main>
             <div v-if="currentPage === 'Dashboard'" class="page">
-                <div>
-                    <canvas style="overflow: hidden;" id="cryptoChart"></canvas>
+                <div class="graphcontainer">
+                    <div class="top-graph">
+                        <p>{{cryptoID.charAt(0).toUpperCase()+cryptoID.slice(1)}}/{{cryptoData2.data.find(item=>item.id===cryptoID).symbol}} </p>
+                        <div class="timeframes">
+                            <div @click="setTimeframe(time.days)"  :class="{active: timeframe === time.days}" v-for="time in times" class="timebtn">
+                                {{time.text}}
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="graph" id="graphdiv">
+                        <canvas id="cryptoChart"></canvas>
+                    </div>
+                    
                 </div>
             </div>
             <div v-if="currentPage === 'Account'" class="page">
