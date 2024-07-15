@@ -25,7 +25,7 @@ Vue.createApp({
             cryptoID: "dogecoin",
             cryptoData: [],
             cryptoData2: [],
-            //hello
+            //hello again 
         };
     },
     methods: {
