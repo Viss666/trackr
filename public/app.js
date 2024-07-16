@@ -35,7 +35,7 @@ Vue.createApp({
                     method: 'GET',
                     headers: {
                         accept: 'application/json',
-
+                        'x-cg-demo-api-key': 'CG-StMKU8Y2HFSrmSkoTuP3Q986'
                     }
                 };
 
@@ -77,6 +77,25 @@ Vue.createApp({
             let newnumber = number.toFixed(2)
             return newnumber
         },
+        // getCryptoName(cryptoID){
+        //     let name = ""
+        //     name = cryptoID.charAt(0).toUpperCase()+cryptoID.slice(1)
+        //     name += "/" + this.cryptoData2.data.find(item=>item.id===cryptoID).symbol
+        //     return name
+        // }
+        getCryptoName(cryptoID) {
+            let name = cryptoID.charAt(0).toUpperCase() + cryptoID.slice(1);
+        
+            for (let i = 0; i < this.cryptoData2.data.length; i++) {
+                if (this.cryptoData2.data[i].id === cryptoID) {
+                    name += "/" + this.cryptoData2.data[i].symbol;
+                    break; // Exit the loop once the match is found
+                }
+            }
+        
+            return name;
+        }
+        ,
         renderChart() {
             let el = document.getElementById("graphdiv")
             let canvas = document.createElement("canvas")

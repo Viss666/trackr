@@ -75,7 +75,7 @@
             <div v-if="currentPage === 'Dashboard'" class="page">
                 <div class="graphcontainer">
                     <div class="top-graph">
-                        <p>{{cryptoID.charAt(0).toUpperCase()+cryptoID.slice(1)}}/{{cryptoData2.data.find(item=>item.id===cryptoID).symbol}} </p>
+                        <!-- <p>{{getCryptoName(cryptoID)}}</p> -->
                         <div class="timeframes">
                             <div @click="setTimeframe(time.days)"  :class="{active: timeframe === time.days}" v-for="time in times" class="timebtn">
                                 {{time.text}}
@@ -85,7 +85,6 @@
                     </div>
                     
                     <div class="graph" id="graphdiv">
-                        <canvas id="cryptoChart"></canvas>
                     </div>
                     
                 </div>
