@@ -1,10 +1,21 @@
 
 const URL = "https://api.coingecko.com/api/v3/coins/";
 const URL2 = "https://api.coincap.io/v2/assets"
+// const NEWSURL = "https://api.marketaux.com/v1/news/all?language=en&api_token=rHh7bLzkHWemOyThaWhNlv4oFGhkzv22nVXy1EMT"
+const COINBASEURL = "https://api.developer.coinbase.com/rpc/v1/base/D0jBiNT0dtUAcHt4CKgKAJKkpH7mCYTH"
 Vue.createApp({
     data() {
         return {
-            currentPage: "Dashboard",
+            currentPage: "Home",
+            user: {
+                name: "",
+                email: "",
+                password: "",
+                profilepic:"",
+            },
+            chartmode:"graphdiv"
+            ,
+            currentUser: null,
             pages: [
                 { text: "Dashboard", image: "/public/images/icons/dashboard.svg" },
                 { text: "Account", image: "/public/images/icons/user-regular.svg" },
@@ -22,10 +33,11 @@ Vue.createApp({
                 { text: "1w", days: "7" },
                 { text: "1d", days: "1" },
             ], 
-            cryptoID: "dogecoin",
+            cryptoID: "bitcoin",
             cryptoData: [],
             cryptoData2: [],
-            //hello again 
+            cryptoData3: [],
+            news:[]
         };
     },
     methods: {
@@ -55,21 +67,63 @@ Vue.createApp({
             const response = await fetch(`${URL2}`, requestOptions);
             const data = await response.json();
             console.log(data)
-            data.data.splice(20,100);
+            data.data.splice(25,100);
             this.cryptoData2 = data
+            console.log(this.cryptoData3)
             console.log(this.cryptoData2)
         },
+        async getcryptodata3() {
+            const options = {
+                method: 'GET',
+                headers: {accept: 'application/json',
+                'x-cg-demo-api-key': 'CG-StMKU8Y2HFSrmSkoTuP3Q986'}
+              };
+              
+              try {
+                const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=20', options);
+                const data = await response.json();
+                this.cryptoData3 = data;
+                console.log(this.cryptoData3);
+              } catch (err) {
+                console.error(err);}
+        },
+        // async getNews(){
+        //     const options = {
+        //         method: 'GET',
+        //         headers: {accept: 'application/json',
+        //         'x-cg-demo-api-key': 'rHh7bLzkHWemOyThaWhNlv4oFGhkzv22nVXy1EMT'}
+        //       };
+        //     try {
+        //         const response = await fetch(NEWSURL, options )
+        //         const data = await response.json();
+        //         this.news = data;
+        //         console.log(this.news);
+        //       } catch (err) {
+        //         console.error(err);}
+        // },
         setPage(Page){
             document.title = "TRAKR | " + Page;
             this.currentPage = Page;
+            if (Page == "Dashboard"){
+                // this.cryptoID="bitcoin"
+                document.getElementById("cryptodropdown").value = "Bitcoin"
+                
+                
+                this.chartmode="graphdiv"
+                this.getcryptodata()
+                
+            }
+            else if (Page == "Chart"){                
+                this.chartmode="chartgraph"
+                this.getcryptodata()
+
+                
+            }
         },
         setTimeframe(time){
             this.timeframe = time;
             this.cryptoData = []
-            console.log(this.timeframe)
-    if (document.getElementById('cryptoChart')){
-        document.getElementById('cryptoChart').remove();
-    }
+            console.log("time " , this.timeframe)
             this.getcryptodata()
         },
         formatprice(price){
@@ -83,25 +137,49 @@ Vue.createApp({
         //     name += "/" + this.cryptoData2.data.find(item=>item.id===cryptoID).symbol
         //     return name
         // }
+        setCryptoId(event){
+            // this.cryptoID = event.target.value.toLowerCase()
+            // this.cryptoID = this.cryptoData3.find(item => item.name === event.target.value).id
+            console.log(this.cryptoID)
+            if (document.getElementById('cryptoChart')){
+                document.getElementById('cryptoChart').remove();
+            }
+            this.getcryptodata()
+        
+        },
         getCryptoName(cryptoID) {
             let name = cryptoID.charAt(0).toUpperCase() + cryptoID.slice(1);
         
             for (let i = 0; i < this.cryptoData2.data.length; i++) {
                 if (this.cryptoData2.data[i].id === cryptoID) {
                     name += "/" + this.cryptoData2.data[i].symbol;
-                    break; // Exit the loop once the match is found
+                    break;
                 }
             }
         
             return name;
+        },
+        fullpage(){
+            this.chartmode = "chartgraph"
+            this.setPage("Chart")
+            console.log(this.currentPage)
+            this.getcryptodata()
         }
         ,
         renderChart() {
-            let el = document.getElementById("graphdiv")
+            if (document.getElementById("cryptoChart")){
+                document.getElementById("cryptoChart").remove();
+            }
+            // let le = document.getElementById("chartgraph")
+            // let chart = document.createElement("canvas")
+            // chart.setAttribute("id", "cryptoChart")
+            let el = document.getElementById(this.chartmode)
+            console.log(el)
             let canvas = document.createElement("canvas")
+            console.log("canvas: ",  canvas)
             canvas.setAttribute("id", "cryptoChart")
             el.appendChild(canvas)
-            const ctx = document.getElementById('cryptoChart').getContext('2d');
+            const ctx = document.getElementById("cryptoChart").getContext('2d');
             const chartData = this.cryptoData.map(item => ({
                 x: item[0],
                 y: item[1]
@@ -120,8 +198,19 @@ Vue.createApp({
                     }]
                 },
                 options: {
+                    hover: {
+                        intersect: false,
+                      },
+                    elements: {
+                        point:{
+                            radius: 0.01,
+                            hoverRadius: 20
+                            
+                        }
+                    },
                     scales: {
                         x: {
+                            
                             type: 'time',
 
                             time: {
@@ -146,5 +235,7 @@ Vue.createApp({
         document.title = "TRAKR | " + this.currentPage;
         this.getcryptodata();
         this.getcryptodataFree()
+        this.getcryptodata3()
+        // this.getNews()
     }
 }).mount("#app");

@@ -25,10 +25,20 @@
 </head>
 <body>
     <div id="app" height="100%">
+        <div v-show="currentPage === 'Home'" class="wholepage">
+                
+        </div>
+
+        <div v-show="currentPage === 'Login'" class="wholepage">
+            
+        </div>
+        <div v-show="currentPage === 'register'" class="wholepage">
+        </div>
         <header>
             <div class="nav">
-            <a href="index.html" class="logo" style="display: flex;">
+            <a style="text-decoration:none;" href="index.html" class="logo" style="display: flex;">
                 <img src="images/trakr-favicon-white.png" width="50px">
+                <p style="font-size: 30px;">TRAKR</p>
             </a>
             <h2 style="font-weight:300;letter-spacing: 5px;">{{currentPage}}</h2>
             <div class="search">
@@ -42,17 +52,22 @@
                 <div class="notification">
                     <div class="notification-bell"></div>
                     <i  class="fa-regular fa-bell largefont-i"></i>
-                </div>
+                </div>  
                 <div class="profile">
                     <img src="https://picsum.photos/50" alt="">
                 </div>
             </div>
         </div>
-        <marquee behavior="scroll" direction="left" class="marqueemain " speed="1">
-            <ul>
+        <marquee behavior="scroll" direction="left" class="marqueemain " loop="infinite" speed="1" scrolldelay="0">
+            <ul v-for="5">
+                <p v-for="coin in cryptoData2.data">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
+                <p v-for="coin in cryptoData2.data">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
+                <p v-for="coin in cryptoData2.data">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
+                <p v-for="coin in cryptoData2.data">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
                 <p v-for="coin in cryptoData2.data">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
             </ul>
-                
+            
+            
             
         </marquee>
         </header>
@@ -72,9 +87,41 @@
             </div>
         </nav>
         <main>
-            <div v-if="currentPage === 'Dashboard'" class="page">
+            <div v-show="currentPage === 'Dashboard'" class="page">
                 <div class="graphcontainer">
                     <div class="top-graph">
+                        <select name="coin" id="cryptodropdown" @change="setCryptoId" v-model="cryptoID">
+                            <option v-for="coin in cryptoData3"class="dropdown"v-bind:value="coin.id">{{coin.name}}
+                            </option>
+                          </select>
+                          
+
+                        <!-- <p>{{getCryptoName(cryptoID)}}</p> -->
+                        <div class="timeframes">
+                            <div @click="setTimeframe(time.days)"  :class="{active: timeframe === time.days}" v-for="time in times" class="timebtn">
+                                {{time.text}}
+                            </div>
+                            
+                        </div>
+                        <div class="fullscreen" @click="fullpage()"><i class="fa-solid fa-expand"></i></div>
+                    </div>
+                    
+                    <div class="graph" id="graphdiv">
+                    </div>
+                    
+                </div>
+            </div>
+            <div v-show="currentPage === 'Account'" class="page">
+            </div>
+            <div v-show="currentPage === 'Chart'" class=" chartpage">
+                <div class="graphcontainer1"  style="width:80%;height: 100%; " >
+                    <div class="top-graph">
+                        <select name="coin" id="cryptodropdown2" @change="setCryptoId" v-model="cryptoID">
+                            <option v-for="coin in cryptoData3"class="dropdown" v-bind:value="coin.id">{{coin.name}}
+                            </option>
+                          </select>
+                          
+
                         <!-- <p>{{getCryptoName(cryptoID)}}</p> -->
                         <div class="timeframes">
                             <div @click="setTimeframe(time.days)"  :class="{active: timeframe === time.days}" v-for="time in times" class="timebtn">
@@ -84,20 +131,17 @@
                         </div>
                     </div>
                     
-                    <div class="graph" id="graphdiv">
-                    </div>
+                    <div class="graph" id="chartgraph" style="width: 100%; height:92%;"></div>
+                </div>
+                
                     
                 </div>
             </div>
-            <div v-if="currentPage === 'Account'" class="page">
+            <div v-show="currentPage === 'Wallet'" class="page">
             </div>
-            <div v-if="currentPage === 'Chart'" class="page">
+            <div v-show="currentPage === 'News'" class="page">
             </div>
-            <div v-if="currentPage === 'Wallet'" class="page">
-            </div>
-            <div v-if="currentPage === 'News'" class="page">
-            </div>
-            <div v-if="currentPage === 'Settings'" class="page">
+            <div v-show="currentPage === 'Settings'" class="page">
             </div>
         </main> 
         </div>
