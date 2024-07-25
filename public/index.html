@@ -199,7 +199,7 @@
             <h2 style="font-weight:300;letter-spacing: 5px;">{{currentPage}}</h2>
             <div class="search">
                 <button v-model="search-btn" ><i class="fa-solid fa-magnifying-glass"></i></button>
-                <input type="text" v-model="search-text" placeholder="Search ...">
+                <input type="text" v-model="search" @input="setPage('Coins')"  style="color: #fff;" placeholder="Search ...">
             </div>
             <div class="top-nav">
                 <div class="mail">
@@ -216,11 +216,11 @@
         </div>
         <marquee behavior="scroll" direction="left" class="marqueemain " loop="infinite" speed="1" scrolldelay="0">
             <ul v-for="5">
-                <p v-for="coin in cryptoData2.data">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
-                <p v-for="coin in cryptoData2.data">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
-                <p v-for="coin in cryptoData2.data">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
-                <p v-for="coin in cryptoData2.data">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
-                <p v-for="coin in cryptoData2.data">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
+                <p v-for="coin in cryptoData2">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
+                <p v-for="coin in cryptoData2">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
+                <p v-for="coin in cryptoData2">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
+                <p v-for="coin in cryptoData2">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
+                <p v-for="coin in cryptoData2">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
             </ul>
             
             
@@ -244,6 +244,38 @@
            </nav>
         <main>
             <div v-show="currentPage === 'Dashboard'" class="page">
+                <div  class="card" v-for="coin in limitedfav">
+                    <div class="topdiv">
+                        <div>
+                            {{coin}}
+
+                        </div>
+                        <button class="button">
+                            <div class="button-box">
+                              <span class="button-elem">
+                                <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
+                                  <path
+                                    d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+                                  ></path>
+                                </svg>
+                              </span>
+                              <span class="button-elem">
+                                <svg viewBox="0 0 46 40">
+                                  <path
+                                    d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+                                  ></path>
+                                </svg>
+                              </span>
+                            </div>
+                          </button>
+                        
+                    </div>
+                    
+                </div>
+                <!-- <div  v-for="coin in favorites" style="display: flex; align-items: center; justify-content: center;text-align: center;" >
+                    <h2>Add Favorite Crypto</h2>
+                </div> -->
+                
                 <div class="graphcontainer">
                     <div class="top-graph">
                         <select name="coin" id="cryptodropdown" @change="setCryptoId" v-model="cryptoID">
@@ -266,8 +298,6 @@
                     </div>
                     
                 </div>
-            </div>
-            <div v-show="currentPage === 'Account'" class="page">
             </div>
             <div v-show="currentPage === 'Chart'" class=" chartpage">
                 <div class="graphcontainer1"  style="width:80%;height: 100%; " >
@@ -292,11 +322,67 @@
                 
                     
                 </div>
+            <div v-if="currentPage === 'Coins'" class="page">
+                <div class="containercoins">
+                    <table style="text-align: center;">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>24h Change</th>
+                            <th>Market Cap</th>
+                        </tr>
+                        <tr v-for="coin in filteredcoins">
+                            <td>{{coin.rank}}</td>
+                            <td>{{coin.name}}</td>
+                            <td>{{parseFloat(coin.priceUsd).toFixed(3)}}</td>
+                            <td>{{parseFloat(coin.volumeUsd24Hr).toFixed(3)}}</td>
+                            <td>{{parseFloat(coin.marketCapUsd).toFixed(3)}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
             <div v-show="currentPage === 'Wallet'" class="page">
             </div>
             <div v-show="currentPage === 'News'" class="page">
+                <div class="articles" v-for="article in news">
+                    {{ article.title }}
+                    <br>
+                    {{ article.publisher }}
+                    <br>
+                    {{ article.link }}
+                </div>
             </div>
             <div v-show="currentPage === 'Settings'" class="page">
+                <div v-if="currentUser" class="container" style="margin-top: 10px;margin-left: 10px; display: flex;flex-direction: column;gap: 10px;">
+                    <div class="userinfo" style="display: flex;flex-direction: column;gap: 5px;">
+                        <h2>User Info:</h2>
+                        <p>Name: {{currentUser.name}}, Email: {{currentUser.name}}</p>
+
+                    </div>
+                    <div class="userfav" >
+                        <h2>Favorite Coins: {{favorites.length}}</h2>
+                    </div>
+                    <div class="search" style="border: #fff solid 2px; border-radius: 5px; width: 250px; padding: 0; position: relative;">
+                        <button v-model="search-btn" style="padding-left: 5px;" ><i class="fa-solid fa-magnifying-glass"></i></button> 
+                        <input type="text" v-model="search2" placeholder="Search ..." style="padding: 5px;width: 100%; color: #fff; font-size: 18px;">
+                    </div>
+                    <div class="coins">
+                        <div v-for="coin in filteredcrypto"  class="coin">
+                            <div v-if="favorites.includes(coin.id)" class="favcoinbox">
+                                {{coin.name }}
+                                
+                                <i class="fa-solid fa-star star"  @click="addFavorite(coin.id)"></i>
+                            </div>
+                            <div v-else class="favcoinbox">
+                                {{coin.name }}
+                                    <i class="fa-regular fa-star star"  @click="addFavorite(coin.id)"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                
+                </div>
             </div>
         </main> 
         </div>

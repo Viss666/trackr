@@ -20,8 +20,11 @@ Vue.createApp({
         password: "",
       },
       //Change end here
+      search2: "",
+      search: "",
       chartmode: "graphdiv",
       currentUser: null,
+      limitedfav:[],
       pages: [
         { text: "Dashboard", image: "/images/icons/dashboard.svg" },
         { text: "Chart", image: "/images/icons/bar-chart-2.svg" },
@@ -42,7 +45,9 @@ Vue.createApp({
       cryptoData: [],
       cryptoData2: [],
       cryptoData3: [],
+      cryptoData4: [],
       news: [],
+    favorites: []
     };
   },
   methods: {
@@ -90,7 +95,12 @@ Vue.createApp({
       if (response.status === 200) {
         let data = await response.json();
         this.currentUser = data
+        console.log(data)
+        this.favorites = data.trackedcoins
+        this.limitedfav = data.trackedcoins.slice(0,3)
+        console.log(this.limitedfav)
         this.setPage("Dashboard");
+        console.log(this.favorites)
       }
     },
     deleteSession: async function (){
@@ -111,6 +121,7 @@ Vue.createApp({
           method: "GET",
           headers: {
             accept: "application/json",
+            "x-cg-demo-api-key": "CG-StMKU8Y2HFSrmSkoTuP3Q986",
           },
         };
 
@@ -132,11 +143,10 @@ Vue.createApp({
       };
       const response = await fetch(`${URL2}`, requestOptions);
       const data = await response.json();
-      console.log(data);
-      data.data.splice(25, 100);
-      this.cryptoData2 = data;
-      console.log(this.cryptoData3);
-      console.log(this.cryptoData2);
+      this.cryptoData4 = data
+      this.cryptoData2 = this.cryptoData4.data.slice(0,25);
+      console.log("cd4", this.cryptoData4)
+      
     },
     async getcryptodata3() {
       const options = {
@@ -173,7 +183,7 @@ Vue.createApp({
     //       } catch (err) {
     //         console.error(err);}
     // },
-    setPage(Page) {
+    async setPage(Page) {
       document.title = "TRAKR | " + Page;
       this.currentPage = Page;
       if (Page == "Dashboard") {
@@ -185,6 +195,15 @@ Vue.createApp({
       } else if (Page == "Chart") {
         this.chartmode = "chartgraph";
         this.getcryptodata();
+      } else if (Page == "Settings")
+      {
+        let response = await fetch("/session");
+        if (response.status === 200) {
+        let data = await response.json();
+        this.currentUser = data
+        this.favorites = data.trackedcoins
+        this.limitedfav = data.trackedcoins.slice(0,3)
+      }
       }
     },
     setTimeframe(time) {
@@ -197,6 +216,17 @@ Vue.createApp({
       let number = parseFloat(price);
       let newnumber = number.toFixed(2);
       return newnumber;
+    },
+    addFavorite(coin){
+      if( this.favorites.includes(coin)){
+        this.favorites.splice(this.favorites.indexOf(coin), 1);
+      }
+      else{
+        this.favorites.push(coin);
+      }
+      this.updateUserCoins();
+      
+
     },
     // getCryptoName(cryptoID){
     //     let name = ""
@@ -230,6 +260,19 @@ Vue.createApp({
       this.setPage("Chart");
       console.log(this.currentPage);
       this.getcryptodata();
+    },
+    async updateUserCoins() {
+      //this function will also most likely be the same function that handles a user favoriting a coin
+      console.log(this.currentUser)
+      console.log(this.favorites)
+      let response = await fetch(`/users/${this.currentUser._id}`, {
+        body: JSON.stringify(this.favorites),
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response);
     },
     renderChart() {
       if (document.getElementById("cryptoChart")) {
@@ -288,21 +331,52 @@ Vue.createApp({
         },
       });
     },
+    async getNews(coin) {
+      this.news = [];
+      try {
+        const response = await fetch(`/news/${coin}`);
+        const data = await response.json();
+        console.log(data);
+        this.news = data;
+
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    }
   },
-  // watch: {
-  //     currentPage(currentPage) {
-  //         document.title = "TRAKR | " + currentPage; // Update document title whenever currentPage changes
-  //     }
-  // },
+  watch: {
+      detectText: function (){
+        console.log("change")
+      }
+  },
+  computed: {
+    filteredcrypto: function () {
+      return this.cryptoData4.data.filter((coin) => {
+        return coin.name
+          .toLowerCase()
+          .includes(this.search2.toLowerCase());
+      });
+    },
+    filteredcoins: function () {
+      return this.cryptoData4.data.filter((coin) => {
+        return coin.name
+          .toLowerCase()
+          .includes(this.search.toLowerCase());
+      });
+    },
+  },
   created() {
     console.log("created");
     document.title = "TRAKR | " + this.currentPage;
     this.getcryptodata();
     this.getcryptodataFree();
     this.getcryptodata3();
-    // this.getNews()
+    this.getNews("BTC-USD")
     //Change starts here
     this.getSession();
     //Change ends here
   },
 }).mount("#app");
+
+

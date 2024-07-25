@@ -21,9 +21,11 @@ const UserSchema = Schema({
     // profilepic:{
     //     type: String,
     // }
-    trackedcoins:{
-        type: Array,
-    }
+    trackedcoins:[
+        {
+            type: String
+        } 
+    ]
 });
 
 UserSchema.methods.setPassword = async function (plainPassword) {
