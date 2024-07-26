@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CSS StyleSheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <!--Favicon-->
-    <link rel="shortcut icon" href="images/trakr-favicon-color1.png" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="images/trakr-favicon-color1.png"
+      type="image/x-icon"
+    />
     <!-- Vue JS CDN -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/88f3d1f48c.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/88f3d1f48c.js"
+      crossorigin="anonymous"
+    ></script>
     <!--Google Fonts-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
@@ -23,43 +33,65 @@
     <!--VUETIFY CDN-->
     <!--title-->
     <title>TRAKR</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="app" height="100%">
-        
-        <div v-show="currentPage === 'Home'" class=" home">
-            <div class="nav">
-                <a style="text-decoration:none;" href="index.html" class="logo" style="display: flex;">
-                    <img src="images/trakr-favicon-color1.png" width="50px">
-                    <p style="font-size: 30px;">TRAKR</p>
-                </a>
-                
-                <div class="top-nav1">
-                    <button class="sign log" @click="setPage('Login')"  style="cursor: pointer; color: #fff;">Sign in</button>
-                </div>
-            </div>
-            <div class="main-container">
-                <div class="main-content cont">
-                    <div class="main-content-text" style="display: flex; flex-flow: column wrap ; gap: 20px;">
-                        <h2 style="font-size: 40px;">
-                        Start Trading Smarter,<br> not harder
-                        </h2>
-                        <p>
-                            Welcome to TRACKR, your ultimate all-in-one trading solution.<br>Empower your financial journey with in-depth market analysis and intuitive design.<br>Experience advanced charting tools, seamless trading, and real-time data all in one place.
-                        </p>
-                        <button class="sign log" @click="setPage('register')" style="cursor:pointer; color: #fff;width: max-content;" >Sign Up Now</button>
-                    </div>
-                    
-                </div>
-                <div class="heroimg cont">
-                    <img src="images/tradinghero.png"   height="600px" alt="">
-                </div>
-            </div>
+      <div v-show="currentPage === 'Home'" class="home">
+        <div class="nav">
+          <a
+            style="text-decoration: none"
+            href="index.html"
+            class="logo"
+            style="display: flex"
+          >
+            <img src="images/trakr-favicon-color1.png" width="50px" />
+            <p style="font-size: 30px">TRAKR</p>
+          </a>
+
+          <div class="top-nav1">
+            <button
+              class="sign log"
+              @click="setPage('Login')"
+              style="cursor: pointer; color: #fff"
+            >
+              Sign in
+            </button>
+          </div>
         </div>
-    
-        <!-- Change Starts here -->
-        <div v-show="currentPage === 'Login'" class="wholepage">
-            <!-- <div class="login_wrapper">
+        <div class="main-container">
+          <div class="main-content cont">
+            <div
+              class="main-content-text"
+              style="display: flex; flex-flow: column wrap; gap: 20px"
+            >
+              <h2 style="font-size: 40px">
+                Start Trading Smarter,<br />
+                not harder
+              </h2>
+              <p>
+                Welcome to TRACKR, your ultimate all-in-one trading solution.<br />Empower
+                your financial journey with in-depth market analysis and
+                intuitive design.<br />Experience advanced charting tools,
+                seamless trading, and real-time data all in one place.
+              </p>
+              <button
+                class="sign log"
+                @click="setPage('register')"
+                style="cursor: pointer; color: #fff; width: max-content"
+              >
+                Sign Up Now
+              </button>
+            </div>
+          </div>
+          <div class="heroimg cont">
+            <img src="images/tradinghero.png" height="600px" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Change Starts here -->
+      <div v-show="currentPage === 'Login'" class="wholepage">
+        <!-- <div class="login_wrapper">
                 <h3>Login</h3>
                 Email:
                 <br>
@@ -74,28 +106,46 @@
                     Don't have an account? Register here!
                 </div>
             </div> -->
-            <div class="form-container">
-                <p class="title">Login</p>
-                <form class="form" @submit.prevent="login()">
-                    <div class="input-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="Email" id="Email" v-model="user.email" placeholder="">
-                    </div>
-                    <div class="input-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" v-model="user.password" placeholder="">
-                        <div class="forgot">
-                            <!-- <a rel="noopener noreferrer" href="#">Forgot Password ?</a> -->
-                        </div>
-                    </div>
-                    <button class="sign" type="submit" style="cursor: pointer; color: #fff;">Sign in</button>
-                </form>
-                <div class="social-message">
-                    <div class="line"></div>
-                    <!-- <p class="message">Login with social accounts</p> -->
-                    <div class="line"></div>
-                </div>
-                <!-- <div class="social-icons">
+        <div class="form-container">
+          <p class="title">Login</p>
+          <form class="form" @submit.prevent="login()">
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                name="Email"
+                id="Email"
+                v-model="user.email"
+                placeholder=""
+              />
+            </div>
+            <div class="input-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                v-model="user.password"
+                placeholder=""
+              />
+              <div class="forgot">
+                <!-- <a rel="noopener noreferrer" href="#">Forgot Password ?</a> -->
+              </div>
+            </div>
+            <button
+              class="sign"
+              type="submit"
+              style="cursor: pointer; color: #fff"
+            >
+              Sign in
+            </button>
+          </form>
+          <div class="social-message">
+            <div class="line"></div>
+            <!-- <p class="message">Login with social accounts</p> -->
+            <div class="line"></div>
+          </div>
+          <!-- <div class="social-icons">
                     <button aria-label="Log in with Google" class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-current">
                             <path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"></path>
@@ -112,16 +162,21 @@
                         </svg>
                     </button>
                 </div> -->
-                <p class="signup" style="margin-top: 10px;">Don't have an account?
-                    <a rel="noopener noreferrer" href="#" class="" @click="setPage('register')">Sign up</a>
-                </p>
-            </div>
-
-            
+          <p class="signup" style="margin-top: 10px">
+            Don't have an account?
+            <a
+              rel="noopener noreferrer"
+              href="#"
+              class=""
+              @click="setPage('register')"
+              >Sign up</a
+            >
+          </p>
         </div>
+      </div>
 
-        <div v-show="currentPage === 'register'" class="wholepage">
-            <!-- <div id="reg_wrapper">
+      <div v-show="currentPage === 'register'" class="wholepage">
+        <!-- <div id="reg_wrapper">
                 <h3>Register</h3>
                 <br>
                 Name:
@@ -142,32 +197,56 @@
                 </div>
             </div> -->
 
-            <div class="form-container">
-                <p class="title">Sign Up</p>
-                <form class="form" @submit.prevent="register()">
-                    <div class="input-group">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="Name" v-model="newUser.name" placeholder="">
-                    </div>
-                    <div class="input-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="Email" id="Email" v-model="newUser.email" placeholder="">
-                    </div>
-                    <div class="input-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" v-model="newUser.password" placeholder="">
-                        <div class="forgot">
-                            <!-- <a rel="noopener noreferrer" href="#">Forgot Password ?</a> -->
-                        </div>
-                    </div>
-                    <button class="sign" type="submit" style="cursor: pointer; color: #fff;">Sign up</button>
-                </form>
-                <div class="social-message">
-                    <div class="line"></div>
-                    <!-- <p class="message">Login with social accounts</p> -->
-                    <div class="line"></div>
-                </div>
-                <!-- <div class="social-icons">
+        <div class="form-container">
+          <p class="title">Sign Up</p>
+          <form class="form" @submit.prevent="register()">
+            <div class="input-group">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                name="name"
+                id="Name"
+                v-model="newUser.name"
+                placeholder=""
+              />
+            </div>
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                name="Email"
+                id="Email"
+                v-model="newUser.email"
+                placeholder=""
+              />
+            </div>
+            <div class="input-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                v-model="newUser.password"
+                placeholder=""
+              />
+              <div class="forgot">
+                <!-- <a rel="noopener noreferrer" href="#">Forgot Password ?</a> -->
+              </div>
+            </div>
+            <button
+              class="sign"
+              type="submit"
+              style="cursor: pointer; color: #fff"
+            >
+              Sign up
+            </button>
+          </form>
+          <div class="social-message">
+            <div class="line"></div>
+            <!-- <p class="message">Login with social accounts</p> -->
+            <div class="line"></div>
+          </div>
+          <!-- <div class="social-icons">
                     <button aria-label="Log in with Google" class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-current">
                             <path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"></path>
@@ -184,267 +263,521 @@
                         </svg>
                     </button>
                 </div> -->
-                <p class="signup" style="margin-top: 10px;">Already have an account?
-                    <a rel="noopener noreferrer" href="#" class="" id="login_link" @click="setPage('Login')">Login here!</a>
-                </p>
-            </div>
+          <p class="signup" style="margin-top: 10px">
+            Already have an account?
+            <a
+              rel="noopener noreferrer"
+              href="#"
+              class=""
+              id="login_link"
+              @click="setPage('Login')"
+              >Login here!</a
+            >
+          </p>
         </div>
-        <!-- Change Ends here -->
+      </div>
+      <!-- Change Ends here -->
 
-        <header>
-            <div class="nav">
-            <a style="text-decoration:none;" href="index.html" class="logo" style="display: flex;">
-                <img src="images/trakr-favicon-color1.png" width="50px">
-                <p style="font-size: 30px;">TRAKR</p>
-            </a>
-            <h2 style="font-weight:300;letter-spacing: 5px;">{{currentPage}}</h2>
-            <div class="search">
-                <button v-model="search-btn" ><i class="fa-solid fa-magnifying-glass"></i></button>
-                <input type="text" v-model="search" @input="setPage('Coins')"  style="color: #fff;" placeholder="Search ...">
+      <header>
+        <div class="nav">
+          <a
+            style="text-decoration: none"
+            href="index.html"
+            class="logo"
+            style="display: flex"
+          >
+            <img src="images/trakr-favicon-color1.png" width="50px" />
+            <p style="font-size: 30px">TRAKR</p>
+          </a>
+          <h2 style="font-weight: 300; letter-spacing: 5px">{{currentPage}}</h2>
+          <div class="search">
+            <button v-model="search-btn">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <input
+              type="text"
+              v-model="search"
+              @input="setPage('Coins')"
+              style="color: #fff"
+              placeholder="Search ..."
+            />
+          </div>
+          <div class="top-nav">
+            <div class="mail">
+              <i class="fa-regular fa-envelope largefont-i"></i>
             </div>
-            <div class="top-nav">
-                <div class="mail">
-                    <i class="fa-regular fa-envelope largefont-i"></i>
-                </div>
-                <div class="notification">
-                    <div class="notification-bell"></div>
-                    <i  class="fa-regular fa-bell largefont-i"></i>
-                </div>  
-                <div v-if="currentUser" class="profile">
-                    <img v-bind:src=`https://api.dicebear.com/9.x/avataaars/svg?seed=${currentUser.email}` alt="">
-                </div>
+            <div class="notification">
+              <div class="notification-bell"></div>
+              <i class="fa-regular fa-bell largefont-i"></i>
             </div>
+            <div v-if="currentUser" class="profile">
+              <img
+              v-bind:src=`https://api.dicebear.com/9.x/avataaars/svg?seed=${currentUser.email}`
+              alt="">
+            </div>
+          </div>
         </div>
-        <marquee behavior="scroll" direction="left" class="marqueemain " loop="infinite" speed="1" scrolldelay="0">
-            <ul v-for="5">
-                <p v-for="coin in cryptoData2">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
-                <p v-for="coin in cryptoData2">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
-                <p v-for="coin in cryptoData2">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
-                <p v-for="coin in cryptoData2">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
-                <p v-for="coin in cryptoData2">{{coin.name}} <span :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'">{{formatprice(coin.changePercent24Hr)}}%</span></p>
-            </ul>
-            
-            
-            
+        <marquee
+          behavior="scroll"
+          direction="left"
+          class="marqueemain"
+          loop="infinite"
+          speed="1"
+          scrolldelay="0"
+        >
+          <ul v-for="5">
+            <p v-for="coin in cryptoData2">
+              {{coin.name}}
+              <span
+                :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'"
+                >{{formatprice(coin.changePercent24Hr)}}%</span
+              >
+            </p>
+            <p v-for="coin in cryptoData2">
+              {{coin.name}}
+              <span
+                :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'"
+                >{{formatprice(coin.changePercent24Hr)}}%</span
+              >
+            </p>
+            <p v-for="coin in cryptoData2">
+              {{coin.name}}
+              <span
+                :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'"
+                >{{formatprice(coin.changePercent24Hr)}}%</span
+              >
+            </p>
+            <p v-for="coin in cryptoData2">
+              {{coin.name}}
+              <span
+                :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'"
+                >{{formatprice(coin.changePercent24Hr)}}%</span
+              >
+            </p>
+            <p v-for="coin in cryptoData2">
+              {{coin.name}}
+              <span
+                :class="coin.changePercent24Hr > 0 ? 'greater-than' : 'less-than'"
+                >{{formatprice(coin.changePercent24Hr)}}%</span
+              >
+            </p>
+          </ul>
         </marquee>
-        </header>
-        <div class="pageflexer">
-           <nav>
-            <ul>
-                <li @click="setPage(page.text)" :class="{active: currentPage === page.text}" v-for="page in pages" style="display: flex;">
-                    <div class="image">
-                        <img :src="page.image" width="20px" alt="" style="display: flex;">
-                    </div>
-                    <p>{{page.text}}</p>
-                </li>
-            </ul>
-            <div class="log-out" @click="deleteSession" style="cursor: pointer; ">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <p>Log Out</p>
-            </div>
-           </nav>
+      </header>
+      <div class="pageflexer">
+        <nav>
+          <ul>
+            <li
+              @click="setPage(page.text)"
+              :class="{active: currentPage === page.text}"
+              v-for="page in pages"
+              style="display: flex"
+            >
+              <div class="image">
+                <img
+                  :src="page.image"
+                  width="20px"
+                  alt=""
+                  style="display: flex"
+                />
+              </div>
+              <p>{{page.text}}</p>
+            </li>
+          </ul>
+          <div class="log-out" @click="deleteSession" style="cursor: pointer">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <p>Log Out</p>
+          </div>
+        </nav>
         <main>
-            <div v-show="currentPage === 'Dashboard'" class="page" style="display: flex; flex-direction: column; padding:  10px 10px 0px 10px;">
-                <div class="topdashboard dash" >
-                    <div v-if="cryptoData5"  class="card" v-for="coin in favoritesarray">
-                    <div class="topdiv">
-                        <div style="display: flex;align-items: center;">
-                            <img :src="coin.image" :alt="coin.name" class="coin-image" loading="lazy" />
-                            <div style="display: flex;flex-direction: column; align-items: center;justify-content: center;">
-                            <p>{{ coin.name }}</p>
-                            <p>{{ coin.symbol.toUpperCase() }}</p>
-                            </div>    
-                        </div>
-                        
-                        
-                        <i class="fa-solid fa-arrow-right" v-if="coin.price_change_24h > 0" style="rotate: -45deg; height: 35px;display: flex;align-items: center;justify-content: center; width:35px; border: #fff solid 2px; border-radius: 100%; color: green; font-size: 23px;"></i>
-                        <i class="fa-solid fa-arrow-right" v-else style="rotate: 135deg; height: 35px; width: 35px;display: flex;align-items: center;justify-content: center; border: #fff solid 2px; border-radius: 100%; color:red; font-size: 23px;"></i>
-                        
+          <div
+            v-show="currentPage === 'Dashboard'"
+            class="page"
+            style="
+              display: flex;
+              flex-direction: column;
+              padding: 10px 10px 0px 10px;
+            "
+          >
+            <div class="topdashboard dash">
+              <div
+                v-if="cryptoData5"
+                class="card"
+                v-for="coin in favoritesarray"
+              >
+                <div class="topdiv">
+                  <div style="display: flex; align-items: center">
+                    <img
+                      :src="coin.image"
+                      :alt="coin.name"
+                      class="coin-image"
+                      loading="lazy"
+                    />
+                    <div
+                      style="
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <p>{{ coin.name }}</p>
+                      <p>{{ coin.symbol.toUpperCase() }}</p>
                     </div>
-                    <div class="botdiv">
-                        <div style="font-size: 22px;">
-                            ${{parseFloat(coin.current_price).toFixed(3)}}
-                          </div>
-                          
+                  </div>
 
-
-                    </div>
-                    
-                    </div>
+                  <i
+                    class="fa-solid fa-arrow-right"
+                    v-if="coin.price_change_24h > 0"
+                    style="
+                      rotate: -45deg;
+                      height: 35px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      width: 35px;
+                      border: #fff solid 2px;
+                      border-radius: 100%;
+                      color: green;
+                      font-size: 23px;
+                    "
+                  ></i>
+                  <i
+                    class="fa-solid fa-arrow-right"
+                    v-else
+                    style="
+                      rotate: 135deg;
+                      height: 35px;
+                      width: 35px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      border: #fff solid 2px;
+                      border-radius: 100%;
+                      color: red;
+                      font-size: 23px;
+                    "
+                  ></i>
                 </div>
-                
-                <!-- <div  v-for="coin in favorites" style="display: flex; align-items: center; justify-content: center;text-align: center;" >
+                <div class="botdiv">
+                  <div style="font-size: 22px">
+                    ${{parseFloat(coin.current_price).toFixed(3)}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div  v-for="coin in favorites" style="display: flex; align-items: center; justify-content: center;text-align: center;" >
                     <h2>Add Favorite Crypto</h2>
                 </div> -->
-                <div class="bottomdashboard dash">
-                    <div class="graphcontainer">
-                            <div class="top-graph">
-                                <select name="coin" id="cryptodropdown" @change="setCryptoId" v-model="cryptoID">
-                                    <option v-for="coin in cryptoData3"class="dropdown"v-bind:value="coin.id">{{coin.name}}
-                                    </option>
-                                </select>
-                                
-
-                                <!-- <p>{{getCryptoName(cryptoID)}}</p> -->
-                                <div class="timeframes">
-                                    <div @click="setTimeframe(time.days)"  :class="{active: timeframe === time.days}" v-for="time in times" class="timebtn">
-                                        {{time.text}}
-                                    </div>
-                                    
-                                </div>
-                                <div class="fullscreen" @click="fullpage()"><i class="fa-solid fa-expand"></i></div>
-                            </div>
-                            
-                            <div class="graph" id="graphdiv">
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                
-            <div v-show="currentPage === 'Chart'" class=" chartpage" style="position: relative;">
-                <div class="graphcontainer1"  style="width:80%;height: 100%; " >
-                    <div class="top-graph">
-                        <select name="coin" id="cryptodropdown2" @change="setCryptoId" v-model="cryptoID">
-                            <option v-for="coin in cryptoData3"class="dropdown" v-bind:value="coin.id">{{coin.name}}
-                            </option>
-                          </select>
-                          
-
-                        <!-- <p>{{getCryptoName(cryptoID)}}</p> -->
-                        <div class="timeframes">
-                            <div @click="setTimeframe(time.days)"  :class="{active: timeframe === time.days}" v-for="time in times" class="timebtn">
-                                {{time.text}}
-                            </div>
-                            
-                        </div>
-                    </div>
-                    
-                    <div class="graph" id="chartgraph" style="width: 100%; height:92%;"></div>
-                </div>
-                <div class="fav" style="height: 100%;width: 20%;display: flex;flex-direction: column;align-items: center;justify-content: center;gap: 1%;padding-inline: 10px;"><div v-if="cryptoData5"  class="card" style="width:100%;height: 23%;" v-for="coin in favoritesarray">
-                    <div class="topdiv">
-                        <div style="display: flex;align-items: center;">
-                            <img :src="coin.image" :alt="coin.name" class="coin-image" loading="lazy" />
-                            <div style="display: flex;flex-direction: column; align-items: center;justify-content: center;">
-                            <p>{{ coin.name }}</p>
-                            <p>{{ coin.symbol.toUpperCase() }}</p>
-                            </div>    
-                        </div>
-                        
-                        
-                        <i class="fa-solid fa-arrow-right" v-if="coin.price_change_24h > 0" style="rotate: -45deg; height: 35px;display: flex;align-items: center;justify-content: center; width:35px; border: #fff solid 2px; border-radius: 100%; color: green; font-size: 23px;"></i>
-                        <i class="fa-solid fa-arrow-right" v-else style="rotate: 135deg; height: 35px; width: 35px;display: flex;align-items: center;justify-content: center; border: #fff solid 2px; border-radius: 100%; color:red; font-size: 23px;"></i>
-                        
-                    </div>
-                    <div class="botdiv">
-                        <div style="font-size: 22px;">
-                            ${{parseFloat(coin.current_price).toFixed(3)}}
-                          </div>
-                          
-
-
-                    </div>
-                    
-                    </div></div>
-                
-                    
-                </div>
-            <div v-if="currentPage === 'Coins'" class="page">
-                <div class="containercoins">
-                    <table style="text-align: center;">
-                        <tr>
-                            <th>Rank</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>24h Change</th>
-                            <th>Market Cap</th>
-                        </tr>
-                        <tr v-for="coin in filteredcoins">
-                            <td>{{coin.rank}}</td>
-                            <td>{{coin.name}}</td>
-                            <td>{{parseFloat(coin.priceUsd).toFixed(3)}}</td>
-                            <td>{{parseFloat(coin.volumeUsd24Hr).toFixed(3)}}</td>
-                            <td>{{parseFloat(coin.marketCapUsd).toFixed(3)}}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div v-show="currentPage === 'Wallet'" class="page" style="display: flex;align-items: center; justify-content:center ;">
-                <h1 style="font-size: 40px; text-align: center;">Coming Soon!</h1>
-            </div>
-            <div v-show="currentPage === 'News'" class="page2">
-                <div class="coin-selection">
+            <div class="bottomdashboard dash">
+              <div class="graphcontainer">
+                <div class="top-graph">
                   <select
                     name="coin"
-                    id="cryptodropdown2"
-                    @change="getNews(currentNews)"
-                    v-model="currentNews"
-                    v-bind:value="currentNews"
+                    id="cryptodropdown"
+                    @change="setCryptoId"
+                    v-model="cryptoID"
                   >
                     <option
                       v-for="coin in cryptoData3"
                       class="dropdown"
-                      v-bind:value="coin.symbol"
-                      @click="getNews(coin.symbol)"
+                      v-bind:value="coin.id"
                     >
                       {{coin.name}}
                     </option>
                   </select>
-                </div>
-    
-                <div id="articles-container">
-                  <div class="articles" v-for="article in news">
-                    <a
-                      v-bind:href="article.link"
-                      target="a_blank"
-                      class="news-title"
+
+                  <!-- <p>{{getCryptoName(cryptoID)}}</p> -->
+                  <div class="timeframes">
+                    <div
+                      @click="setTimeframe(time.days)"
+                      :class="{active: timeframe === time.days}"
+                      v-for="time in times"
+                      class="timebtn"
                     >
-                      {{article.title}}
-                    </a>
-                    <br />
-                    Published by {{ article.publisher }}
+                      {{time.text}}
+                    </div>
+                  </div>
+                  <div class="fullscreen" @click="fullpage()">
+                    <i class="fa-solid fa-expand"></i>
+                  </div>
+                </div>
+
+                <div class="graph" id="graphdiv"></div>
+              </div>
+              <div id="articles-container2">
+                <div class="articles" v-for="article in news.slice(0,3)">
+                  <a
+                    v-bind:href="article.link"
+                    target="a_blank"
+                    class="news-title"
+                  >
+                    {{article.title}}
+                  </a>
+                  <br />
+                  Published by {{ article.publisher }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            v-show="currentPage === 'Chart'"
+            class="chartpage"
+            style="position: relative"
+          >
+            <div class="graphcontainer1" style="width: 80%; height: 100%">
+              <div class="top-graph">
+                <select
+                  name="coin"
+                  id="cryptodropdown2"
+                  @change="setCryptoId"
+                  v-model="cryptoID"
+                >
+                  <option
+                    v-for="coin in cryptoData3"
+                    class="dropdown"
+                    v-bind:value="coin.id"
+                  >
+                    {{coin.name}}
+                  </option>
+                </select>
+
+                <!-- <p>{{getCryptoName(cryptoID)}}</p> -->
+                <div class="timeframes">
+                  <div
+                    @click="setTimeframe(time.days)"
+                    :class="{active: timeframe === time.days}"
+                    v-for="time in times"
+                    class="timebtn"
+                  >
+                    {{time.text}}
                   </div>
                 </div>
               </div>
-            <div v-show="currentPage === 'Settings'" class="page">
-                <div v-if="currentUser" class="container" style="margin-top: 10px;margin-left: 10px; display: flex;flex-direction: column;gap: 10px;">
-                    <div class="userinfo" style="display: flex;flex-direction: column;gap: 5px;">
-                        <h2>User Info:</h2>
-                        <p>Name: {{currentUser.name}}</p> <p>Email: {{currentUser.email}}</p>
 
-                    </div>
-                    <div class="userfav" >
-                        <h2>Favorite Coins: {{favorites.length}}</h2>
-                    </div>
-                    <div class="search" style="border: #fff solid 2px; border-radius: 5px; width: 250px; padding: 0; position: relative;">
-                        <button v-model="search-btn" style="padding-left: 5px;" ><i class="fa-solid fa-magnifying-glass"></i></button> 
-                        <input type="text" v-model="search2" placeholder="Search ..." style="padding: 5px;width: 100%; color: #fff; font-size: 18px;">
-                    </div>
-                    <div class="coins" v-if="currentUser">
-                        <div v-for="coin in filteredcrypto"  class="coin">
-                            <div v-if="favorites.includes(coin.id)" class="favcoinbox">
-                                {{coin.name }}
-                                
-                                <i class="fa-solid fa-star star"  @click="addFavorite(coin.id)"></i>
-                            </div>
-                            <div v-else class="favcoinbox">
-                                {{coin.name }}
-                                    <i class="fa-regular fa-star star"  @click="addFavorite(coin.id)"></i>
-                            </div>
-
-                        </div>
-                    </div>
-                
-                </div>
+              <div
+                class="graph"
+                id="chartgraph"
+                style="width: 100%; height: 92%"
+              ></div>
             </div>
-        </main> 
-        </div>
-        
+            <div
+              class="fav"
+              style="
+                height: 100%;
+                width: 20%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1%;
+                padding-inline: 10px;
+              "
+            >
+              <div
+                v-if="cryptoData5"
+                class="card"
+                style="width: 100%; height: 23%"
+                v-for="coin in favoritesarray"
+              >
+                <div class="topdiv">
+                  <div style="display: flex; align-items: center">
+                    <img
+                      :src="coin.image"
+                      :alt="coin.name"
+                      class="coin-image"
+                      loading="lazy"
+                    />
+                    <div
+                      style="
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <p>{{ coin.name }}</p>
+                      <p>{{ coin.symbol.toUpperCase() }}</p>
+                    </div>
+                  </div>
 
+                  <i
+                    class="fa-solid fa-arrow-right"
+                    v-if="coin.price_change_24h > 0"
+                    style="
+                      rotate: -45deg;
+                      height: 35px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      width: 35px;
+                      border: #fff solid 2px;
+                      border-radius: 100%;
+                      color: green;
+                      font-size: 23px;
+                    "
+                  ></i>
+                  <i
+                    class="fa-solid fa-arrow-right"
+                    v-else
+                    style="
+                      rotate: 135deg;
+                      height: 35px;
+                      width: 35px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      border: #fff solid 2px;
+                      border-radius: 100%;
+                      color: red;
+                      font-size: 23px;
+                    "
+                  ></i>
+                </div>
+                <div class="botdiv">
+                  <div style="font-size: 22px">
+                    ${{parseFloat(coin.current_price).toFixed(3)}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-if="currentPage === 'Coins'" class="page">
+            <div class="containercoins">
+              <table style="text-align: center">
+                <tr>
+                  <th>Rank</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>24h Change</th>
+                  <th>Market Cap</th>
+                </tr>
+                <tr v-for="coin in filteredcoins">
+                  <td>{{coin.rank}}</td>
+                  <td>{{coin.name}}</td>
+                  <td>{{parseFloat(coin.priceUsd).toFixed(3)}}</td>
+                  <td>{{parseFloat(coin.volumeUsd24Hr).toFixed(3)}}</td>
+                  <td>{{parseFloat(coin.marketCapUsd).toFixed(3)}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div
+            v-show="currentPage === 'Wallet'"
+            class="page"
+            style="display: flex; align-items: center; justify-content: center"
+          >
+            <h1 style="font-size: 40px; text-align: center">Coming Soon!</h1>
+          </div>
+          <div v-show="currentPage === 'News'" class="page2">
+            <div class="coin-selection">
+              <select
+                name="coin"
+                id="cryptodropdown2"
+                @change="getNews(currentNews)"
+                v-model="currentNews"
+                v-bind:value="currentNews"
+              >
+                <option
+                  v-for="coin in cryptoData3"
+                  class="dropdown"
+                  v-bind:value="coin.symbol"
+                  @click="getNews(coin.symbol)"
+                >
+                  {{coin.name}}
+                </option>
+              </select>
+            </div>
+
+            <div id="articles-container">
+              <div class="articles" v-for="article in news">
+                <a
+                  v-bind:href="article.link"
+                  target="a_blank"
+                  class="news-title"
+                >
+                  {{article.title}}
+                </a>
+                <br />
+                Published by {{ article.publisher }}
+              </div>
+            </div>
+          </div>
+          <div v-show="currentPage === 'Settings'" class="page">
+            <div
+              v-if="currentUser"
+              class="container"
+              style="
+                margin-top: 10px;
+                margin-left: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+              "
+            >
+              <div
+                class="userinfo"
+                style="display: flex; flex-direction: column; gap: 5px"
+              >
+                <h2>User Info:</h2>
+                <p>Name: {{currentUser.name}}</p>
+                <p>Email: {{currentUser.email}}</p>
+              </div>
+              <div class="userfav">
+                <h2>Favorite Coins: {{favorites.length}}</h2>
+              </div>
+              <div
+                class="search"
+                style="
+                  border: #fff solid 2px;
+                  border-radius: 5px;
+                  width: 250px;
+                  padding: 0;
+                  position: relative;
+                "
+              >
+                <button v-model="search-btn" style="padding-left: 5px">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <input
+                  type="text"
+                  v-model="search2"
+                  placeholder="Search ..."
+                  style="
+                    padding: 5px;
+                    width: 100%;
+                    color: #fff;
+                    font-size: 18px;
+                  "
+                />
+              </div>
+              <div class="coins" v-if="currentUser">
+                <div v-for="coin in filteredcrypto" class="coin">
+                  <div v-if="favorites.includes(coin.id)" class="favcoinbox">
+                    {{coin.name }}
+
+                    <i
+                      class="fa-solid fa-star star"
+                      @click="addFavorite(coin.id)"
+                    ></i>
+                  </div>
+                  <div v-else class="favcoinbox">
+                    {{coin.name }}
+                    <i
+                      class="fa-regular fa-star star"
+                      @click="addFavorite(coin.id)"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
-    
 
     <script src="app.js"></script>
-</body>
+  </body>
 </html>

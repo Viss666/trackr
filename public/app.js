@@ -23,14 +23,14 @@ Vue.createApp({
       search: "",
       chartmode: "graphdiv",
       currentUser: null,
-      limitedfav:[],
+      limitedfav: [],
       pages: [
         { text: "Dashboard", image: "/images/icons/dashboard.svg" },
         { text: "Chart", image: "/images/icons/bar-chart-2.svg" },
         { text: "Coins", image: "images/icons/bitcoin-brands-solid.svg" },
         { text: "News", image: "/images/icons/news.svg" },
         { text: "Wallet", image: "/images/icons/wallet.svg" },
-        {text: "Settings",image: "/images/icons/settings-outline.svg"},
+        { text: "Settings", image: "/images/icons/settings-outline.svg" },
       ],
       timeframe: "365",
       times: [
@@ -47,8 +47,8 @@ Vue.createApp({
       cryptoData4: [],
       news: [],
       currentNews: "btc",
-    favorites: [],
-    favoritesarray:[]
+      favorites: [],
+      favoritesarray: [],
     };
   },
   methods: {
@@ -62,7 +62,7 @@ Vue.createApp({
         },
       });
       if (response.status == 201) {
-        this.currentUser = await response.json()
+        this.currentUser = await response.json();
         //successful sign in
         // alert("Successfully logged in");
         this.setPage("Dashboard");
@@ -95,28 +95,27 @@ Vue.createApp({
       let response = await fetch("/session");
       if (response.status === 200) {
         let data = await response.json();
-        this.currentUser = data
-        console.log(data)
-        this.favorites = data.trackedcoins
+        this.currentUser = data;
+        console.log(data);
+        this.favorites = data.trackedcoins;
         if (this.cryptoData5.length > 0) {
-        this.favoritesarraywork();
-      } else {
-        console.error("cryptoData5 is not populated yet");
-      }
+          this.favoritesarraywork();
+        } else {
+          console.error("cryptoData5 is not populated yet");
+        }
         this.setPage("Dashboard");
-        console.log(this.favorites)
+        console.log(this.favorites);
       }
     },
-    deleteSession: async function (){
+    deleteSession: async function () {
       let response = await fetch("/session", {
         method: "DELETE",
-          });
-          if (response.status === 204) {
-            this.setPage("Login");
-            }
-          else{
-            console.log("error")
-          }
+      });
+      if (response.status === 204) {
+        this.setPage("Login");
+      } else {
+        console.log("error");
+      }
     },
     //Change ends here
     async getcryptodata() {
@@ -147,10 +146,9 @@ Vue.createApp({
       };
       const response = await fetch(`${URL2}`, requestOptions);
       const data = await response.json();
-      this.cryptoData4 = data
-      this.cryptoData2 = this.cryptoData4.data.slice(0,25);
-      console.log("cd4", this.cryptoData4)
-      
+      this.cryptoData4 = data;
+      this.cryptoData2 = this.cryptoData4.data.slice(0, 25);
+      console.log("cd4", this.cryptoData4);
     },
     async getcryptodata3() {
       const options = {
@@ -169,8 +167,8 @@ Vue.createApp({
         const data = await response.json();
 
         this.cryptoData5 = data;
-        this.cryptoData3 = this.cryptoData5.slice(0,20)
-        console.log("cd5 get cryptodata5",this.cryptoData5)
+        this.cryptoData3 = this.cryptoData5.slice(0, 20);
+        console.log("cd5 get cryptodata5", this.cryptoData5);
 
         console.log("cd3", this.cryptoData3);
       } catch (err) {
@@ -203,15 +201,14 @@ Vue.createApp({
       } else if (Page == "Chart") {
         this.chartmode = "chartgraph";
         this.getcryptodata();
-      } else if (Page == "Settings")
-      {
+      } else if (Page == "Settings") {
         let response = await fetch("/session");
         if (response.status === 200) {
-        let data = await response.json();
-        this.currentUser = data
-        this.favorites = data.trackedcoins
-        this.favoritesarraywork();
-      }
+          let data = await response.json();
+          this.currentUser = data;
+          this.favorites = data.trackedcoins;
+          this.favoritesarraywork();
+        }
       }
     },
     setTimeframe(time) {
@@ -225,28 +222,25 @@ Vue.createApp({
       let newnumber = number.toFixed(2);
       return newnumber;
     },
-    addFavorite(coin){
-      if( this.favorites.includes(coin)){
+    addFavorite(coin) {
+      if (this.favorites.includes(coin)) {
         this.favorites.splice(this.favorites.indexOf(coin), 1);
-      }
-      else{
+      } else {
         this.favorites.push(coin);
       }
       this.updateUserCoins();
-
-      
-
     },
-    favoritesarraywork(){
+    favoritesarraywork() {
       if (this.favorites.length > 4) {
-        this.favoritesarray = this.favorites.slice(0, 4).map(favorite => {
-          return this.cryptoData5.find(coin => coin.id === favorite);
+        this.favoritesarray = this.favorites.slice(0, 4).map((favorite) => {
+          return this.cryptoData5.find((coin) => coin.id === favorite);
         });
       } else {
-        this.favoritesarray = this.favorites.map(favorite => {
-          return this.cryptoData5.find(coin => coin.id === favorite);
+        this.favoritesarray = this.favorites.map((favorite) => {
+          return this.cryptoData5.find((coin) => coin.id === favorite);
         });
-      }    },
+      }
+    },
     // getCryptoName(cryptoID){
     //     let name = ""
     //     name = cryptoID.charAt(0).toUpperCase()+cryptoID.slice(1)
@@ -282,8 +276,8 @@ Vue.createApp({
     },
     async updateUserCoins() {
       //this function will also most likely be the same function that handles a user favoriting a coin
-      console.log(this.currentUser)
-      console.log(this.favorites)
+      console.log(this.currentUser);
+      console.log(this.favorites);
       let response = await fetch(`/users/${this.currentUser._id}`, {
         body: JSON.stringify(this.favorites),
         method: "PUT",
@@ -374,44 +368,35 @@ Vue.createApp({
       formatCoin += "-USD";
       return formatCoin;
     },
-
   },
   watch: {
-      detectText: function (){
-        console.log("change")
-      }
+    detectText: function () {
+      console.log("change");
+    },
   },
   computed: {
     filteredcrypto: function () {
-      if(this.cryptoData5){
+      if (this.cryptoData5) {
         return this.cryptoData5.filter((coin) => {
-          return coin.name
-            .toLowerCase()
-            .includes(this.search2.toLowerCase());
+          return coin.name.toLowerCase().includes(this.search2.toLowerCase());
         });
       }
     },
     filteredcoins: function () {
-      if(this.cryptoData4){
+      if (this.cryptoData4) {
         return this.cryptoData4.data.filter((coin) => {
-          return coin.name
-            .toLowerCase()
-            .includes(this.search.toLowerCase());
+          return coin.name.toLowerCase().includes(this.search.toLowerCase());
         });
       }
     },
   },
-  created() {
+  async created() {
     console.log("created");
     document.title = "TRAKR | " + this.currentPage;
     this.getcryptodata();
     this.getcryptodataFree();
-    this.getcryptodata3();
+    await this.getcryptodata3();
     this.getNews(this.currentNews);
     this.getSession();
-    
-  }
-  ,
+  },
 }).mount("#app");
-
-
