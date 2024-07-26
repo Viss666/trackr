@@ -11,7 +11,6 @@ Vue.createApp({
         name: "",
         email: "",
         password: "",
-        // profilepic: "",
       },
       //Change start here
       newUser: {
@@ -47,7 +46,9 @@ Vue.createApp({
       cryptoData3: [],
       cryptoData4: [],
       news: [],
-    favorites: []
+      currentNews: "btc",
+    favorites: [],
+    favoritesarray:[]
     };
   },
   methods: {
@@ -97,8 +98,11 @@ Vue.createApp({
         this.currentUser = data
         console.log(data)
         this.favorites = data.trackedcoins
-        this.limitedfav = data.trackedcoins.slice(0,3)
-        console.log(this.limitedfav)
+        if (this.cryptoData5.length > 0) {
+        this.favoritesarraywork();
+      } else {
+        console.error("cryptoData5 is not populated yet");
+      }
         this.setPage("Dashboard");
         console.log(this.favorites)
       }
@@ -159,12 +163,16 @@ Vue.createApp({
 
       try {
         const response = await fetch(
-          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=20",
+          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd",
           options
         );
         const data = await response.json();
-        this.cryptoData3 = data;
-        console.log(this.cryptoData3);
+
+        this.cryptoData5 = data;
+        this.cryptoData3 = this.cryptoData5.slice(0,20)
+        console.log("cd5 get cryptodata5",this.cryptoData5)
+
+        console.log("cd3", this.cryptoData3);
       } catch (err) {
         console.error(err);
       }
@@ -202,7 +210,7 @@ Vue.createApp({
         let data = await response.json();
         this.currentUser = data
         this.favorites = data.trackedcoins
-        this.limitedfav = data.trackedcoins.slice(0,3)
+        this.favoritesarraywork();
       }
       }
     },
@@ -225,9 +233,20 @@ Vue.createApp({
         this.favorites.push(coin);
       }
       this.updateUserCoins();
+
       
 
     },
+    favoritesarraywork(){
+      if (this.favorites.length > 4) {
+        this.favoritesarray = this.favorites.slice(0, 4).map(favorite => {
+          return this.cryptoData5.find(coin => coin.id === favorite);
+        });
+      } else {
+        this.favoritesarray = this.favorites.map(favorite => {
+          return this.cryptoData5.find(coin => coin.id === favorite);
+        });
+      }    },
     // getCryptoName(cryptoID){
     //     let name = ""
     //     name = cryptoID.charAt(0).toUpperCase()+cryptoID.slice(1)
@@ -273,6 +292,7 @@ Vue.createApp({
         },
       });
       console.log(response);
+      this.favoritesarraywork();
     },
     renderChart() {
       if (document.getElementById("cryptoChart")) {
@@ -331,19 +351,30 @@ Vue.createApp({
         },
       });
     },
-    async getNews(coin) {
+    async getNews(symbol) {
       this.news = [];
+      let coin = this.convertCoin(symbol);
       try {
         const response = await fetch(`/news/${coin}`);
         const data = await response.json();
-        console.log(data);
+        // for (article in data) {
+        //   this.news.push(article);
+        //   console.log(this.news[article]);
+        // }
+        console.log("our data:", data);
         this.news = data;
-
       } catch (error) {
-        console.log(error);
-        throw error;
+        console.error("Error fetching news:", error);
+        throw error; // Rethrow the error for handling in calling function
       }
-    }
+    },
+
+    convertCoin(coin) {
+      let formatCoin = coin.toUpperCase();
+      formatCoin += "-USD";
+      return formatCoin;
+    },
+
   },
   watch: {
       detectText: function (){
@@ -352,18 +383,22 @@ Vue.createApp({
   },
   computed: {
     filteredcrypto: function () {
-      return this.cryptoData4.data.filter((coin) => {
-        return coin.name
-          .toLowerCase()
-          .includes(this.search2.toLowerCase());
-      });
+      if(this.cryptoData5){
+        return this.cryptoData5.filter((coin) => {
+          return coin.name
+            .toLowerCase()
+            .includes(this.search2.toLowerCase());
+        });
+      }
     },
     filteredcoins: function () {
-      return this.cryptoData4.data.filter((coin) => {
-        return coin.name
-          .toLowerCase()
-          .includes(this.search.toLowerCase());
-      });
+      if(this.cryptoData4){
+        return this.cryptoData4.data.filter((coin) => {
+          return coin.name
+            .toLowerCase()
+            .includes(this.search.toLowerCase());
+        });
+      }
     },
   },
   created() {
@@ -372,11 +407,11 @@ Vue.createApp({
     this.getcryptodata();
     this.getcryptodataFree();
     this.getcryptodata3();
-    this.getNews("BTC-USD")
-    //Change starts here
+    this.getNews(this.currentNews);
     this.getSession();
-    //Change ends here
-  },
+    
+  }
+  ,
 }).mount("#app");
 
 

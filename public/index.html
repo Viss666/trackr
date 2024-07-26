@@ -20,6 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/date-fns@3.6.0/cdn.min.js"></script>
+    <!--VUETIFY CDN-->
     <!--title-->
     <title>TRAKR</title>
 </head>
@@ -243,63 +244,65 @@
             </div>
            </nav>
         <main>
-            <div v-show="currentPage === 'Dashboard'" class="page">
-                <div  class="card" v-for="coin in limitedfav">
+            <div v-show="currentPage === 'Dashboard'" class="page" style="display: flex; flex-direction: column; padding:  10px 10px 0px 10px;">
+                <div class="topdashboard dash" >
+                    <div v-if="cryptoData5"  class="card" v-for="coin in favoritesarray">
                     <div class="topdiv">
-                        <div>
-                            {{coin}}
-
+                        <div style="display: flex;align-items: center;">
+                            <img :src="coin.image" :alt="coin.name" class="coin-image" loading="lazy" />
+                            <div style="display: flex;flex-direction: column; align-items: center;justify-content: center;">
+                            <p>{{ coin.name }}</p>
+                            <p>{{ coin.symbol.toUpperCase() }}</p>
+                            </div>    
                         </div>
-                        <button class="button">
-                            <div class="button-box">
-                              <span class="button-elem">
-                                <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
-                                  <path
-                                    d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
-                                  ></path>
-                                </svg>
-                              </span>
-                              <span class="button-elem">
-                                <svg viewBox="0 0 46 40">
-                                  <path
-                                    d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
-                                  ></path>
-                                </svg>
-                              </span>
-                            </div>
-                          </button>
+                        
+                        
+                        <i class="fa-solid fa-arrow-right" v-if="coin.price_change_24h > 0" style="rotate: -45deg; height: 35px;display: flex;align-items: center;justify-content: center; width:35px; border: #fff solid 2px; border-radius: 100%; color: green; font-size: 23px;"></i>
+                        <i class="fa-solid fa-arrow-right" v-else style="rotate: 135deg; height: 35px; width: 35px;display: flex;align-items: center;justify-content: center; border: #fff solid 2px; border-radius: 100%; color:red; font-size: 23px;"></i>
                         
                     </div>
+                    <div class="botdiv">
+                        <div style="font-size: 22px;">
+                            ${{parseFloat(coin.current_price).toFixed(3)}}
+                          </div>
+                          
+
+
+                    </div>
                     
+                    </div>
                 </div>
+                
                 <!-- <div  v-for="coin in favorites" style="display: flex; align-items: center; justify-content: center;text-align: center;" >
                     <h2>Add Favorite Crypto</h2>
                 </div> -->
-                
-                <div class="graphcontainer">
-                    <div class="top-graph">
-                        <select name="coin" id="cryptodropdown" @change="setCryptoId" v-model="cryptoID">
-                            <option v-for="coin in cryptoData3"class="dropdown"v-bind:value="coin.id">{{coin.name}}
-                            </option>
-                          </select>
-                          
+                <div class="bottomdashboard dash">
+                    <div class="graphcontainer">
+                            <div class="top-graph">
+                                <select name="coin" id="cryptodropdown" @change="setCryptoId" v-model="cryptoID">
+                                    <option v-for="coin in cryptoData3"class="dropdown"v-bind:value="coin.id">{{coin.name}}
+                                    </option>
+                                </select>
+                                
 
-                        <!-- <p>{{getCryptoName(cryptoID)}}</p> -->
-                        <div class="timeframes">
-                            <div @click="setTimeframe(time.days)"  :class="{active: timeframe === time.days}" v-for="time in times" class="timebtn">
-                                {{time.text}}
+                                <!-- <p>{{getCryptoName(cryptoID)}}</p> -->
+                                <div class="timeframes">
+                                    <div @click="setTimeframe(time.days)"  :class="{active: timeframe === time.days}" v-for="time in times" class="timebtn">
+                                        {{time.text}}
+                                    </div>
+                                    
+                                </div>
+                                <div class="fullscreen" @click="fullpage()"><i class="fa-solid fa-expand"></i></div>
+                            </div>
+                            
+                            <div class="graph" id="graphdiv">
                             </div>
                             
                         </div>
-                        <div class="fullscreen" @click="fullpage()"><i class="fa-solid fa-expand"></i></div>
                     </div>
-                    
-                    <div class="graph" id="graphdiv">
-                    </div>
-                    
                 </div>
-            </div>
-            <div v-show="currentPage === 'Chart'" class=" chartpage">
+                
+            <div v-show="currentPage === 'Chart'" class=" chartpage" style="position: relative;">
                 <div class="graphcontainer1"  style="width:80%;height: 100%; " >
                     <div class="top-graph">
                         <select name="coin" id="cryptodropdown2" @change="setCryptoId" v-model="cryptoID">
@@ -319,6 +322,31 @@
                     
                     <div class="graph" id="chartgraph" style="width: 100%; height:92%;"></div>
                 </div>
+                <div class="fav" style="height: 100%;width: 20%;display: flex;flex-direction: column;align-items: center;justify-content: center;gap: 1%;padding-inline: 10px;"><div v-if="cryptoData5"  class="card" style="width:100%;height: 23%;" v-for="coin in favoritesarray">
+                    <div class="topdiv">
+                        <div style="display: flex;align-items: center;">
+                            <img :src="coin.image" :alt="coin.name" class="coin-image" loading="lazy" />
+                            <div style="display: flex;flex-direction: column; align-items: center;justify-content: center;">
+                            <p>{{ coin.name }}</p>
+                            <p>{{ coin.symbol.toUpperCase() }}</p>
+                            </div>    
+                        </div>
+                        
+                        
+                        <i class="fa-solid fa-arrow-right" v-if="coin.price_change_24h > 0" style="rotate: -45deg; height: 35px;display: flex;align-items: center;justify-content: center; width:35px; border: #fff solid 2px; border-radius: 100%; color: green; font-size: 23px;"></i>
+                        <i class="fa-solid fa-arrow-right" v-else style="rotate: 135deg; height: 35px; width: 35px;display: flex;align-items: center;justify-content: center; border: #fff solid 2px; border-radius: 100%; color:red; font-size: 23px;"></i>
+                        
+                    </div>
+                    <div class="botdiv">
+                        <div style="font-size: 22px;">
+                            ${{parseFloat(coin.current_price).toFixed(3)}}
+                          </div>
+                          
+
+
+                    </div>
+                    
+                    </div></div>
                 
                     
                 </div>
@@ -342,22 +370,48 @@
                     </table>
                 </div>
             </div>
-            <div v-show="currentPage === 'Wallet'" class="page">
+            <div v-show="currentPage === 'Wallet'" class="page" style="display: flex;align-items: center; justify-content:center ;">
+                <h1 style="font-size: 40px; text-align: center;">Coming Soon!</h1>
             </div>
-            <div v-show="currentPage === 'News'" class="page">
-                <div class="articles" v-for="article in news">
-                    {{ article.title }}
-                    <br>
-                    {{ article.publisher }}
-                    <br>
-                    {{ article.link }}
+            <div v-show="currentPage === 'News'" class="page2">
+                <div class="coin-selection">
+                  <select
+                    name="coin"
+                    id="cryptodropdown2"
+                    @change="getNews(currentNews)"
+                    v-model="currentNews"
+                    v-bind:value="currentNews"
+                  >
+                    <option
+                      v-for="coin in cryptoData3"
+                      class="dropdown"
+                      v-bind:value="coin.symbol"
+                      @click="getNews(coin.symbol)"
+                    >
+                      {{coin.name}}
+                    </option>
+                  </select>
                 </div>
-            </div>
+    
+                <div id="articles-container">
+                  <div class="articles" v-for="article in news">
+                    <a
+                      v-bind:href="article.link"
+                      target="a_blank"
+                      class="news-title"
+                    >
+                      {{article.title}}
+                    </a>
+                    <br />
+                    Published by {{ article.publisher }}
+                  </div>
+                </div>
+              </div>
             <div v-show="currentPage === 'Settings'" class="page">
                 <div v-if="currentUser" class="container" style="margin-top: 10px;margin-left: 10px; display: flex;flex-direction: column;gap: 10px;">
                     <div class="userinfo" style="display: flex;flex-direction: column;gap: 5px;">
                         <h2>User Info:</h2>
-                        <p>Name: {{currentUser.name}}, Email: {{currentUser.name}}</p>
+                        <p>Name: {{currentUser.name}}</p> <p>Email: {{currentUser.email}}</p>
 
                     </div>
                     <div class="userfav" >
@@ -367,7 +421,7 @@
                         <button v-model="search-btn" style="padding-left: 5px;" ><i class="fa-solid fa-magnifying-glass"></i></button> 
                         <input type="text" v-model="search2" placeholder="Search ..." style="padding: 5px;width: 100%; color: #fff; font-size: 18px;">
                     </div>
-                    <div class="coins">
+                    <div class="coins" v-if="currentUser">
                         <div v-for="coin in filteredcrypto"  class="coin">
                             <div v-if="favorites.includes(coin.id)" class="favcoinbox">
                                 {{coin.name }}
